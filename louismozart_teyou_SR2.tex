@@ -1,0 +1,317 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Template for AIMS Rwanda Assignments         %%%              %%%
+%%% Author:   AIMS Rwanda tutors                             %%%   ###        %%%
+%%% Email: tutors2017-18@aims.ac.rw                               %%%   ###        %%%
+%%% Copyright: This template was designed to be used for    %%% #######      %%%
+%%% the assignments at AIMS Rwanda during the academic year %%%   ###        %%%
+%%% 2017-2018.                                              %%%   #########  %%%
+%%% You are free to alter any part of this document for     %%%   ###   ###  %%%
+%%% yourself and for distribution.                          %%%   ###   ###  %%%
+%%%                                                         %%%              %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%% Ensure that you do not write the questions before each of the solutions because it is not necessary. %%%%%% 
+
+\documentclass[11pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% packages %%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[all]{xy}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{psfrag}
+\usepackage{float}
+
+%%%%%%%%%%%%%%%%%%%%% students data %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\student}{Louis Mozart Kamdem}
+\newcommand{\course}{LaTex}
+\newcommand{\assignment}{1}
+
+%%%%%%%%%%%%%%%%%%% using theorem style %%%%%%%%%%%%%%%%%%%%
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{quest}{Question}[section]
+
+%%%%%%%%%%%%%%  Shortcut for usual set of numbers  %%%%%%%%%%%
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%% title page %%%%%%%%%%%%%%%%%%%%%%%%%%
+	\thispagestyle{empty}
+	\begin{center}
+		\textbf{AFRICAN INSTITUTE FOR MATHEMATICAL SCIENCES \\[0.5cm]
+			(AIMS RWANDA, KIGALI)}
+		\vspace{1.0cm}
+	\end{center}
+	
+	%%%%%%%%%%%%%%%%%%%%% assignment information %%%%%%%%%%%%%%%%
+	\noindent
+	\rule{17cm}{0.2cm}\\[0.3cm]
+	Name:\student \hfill Assignment Number: 2\\[0.1cm]
+	Course: SR \hfill Date: \today\\
+	\rule{17cm}{0.05cm}
+	\vspace{1.0cm} 
+
+\section*{Task 1:}
+
+1) Build of the linear regression model:\\
+\\To construct our model we will first takes all the variables (unless $User_{-}Id$) as explanatory variable and we will perform it as we go along. Let call this first model the model 1. We have in the table below the summary of model1
+% latex table generated in R 4.1.2 by xtable 1.8-4 package
+% Wed Dec  8 20:24:16 2021
+\begin{table}[ht]
+	\caption{Summary model1}
+	\centering
+	\begin{tabular}{rrrrr}
+		\hline
+		& Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+		\hline
+		(Intercept) & 8275.0003 & 51.3159 & 161.26 & 2e-16  \\ 
+		Age\_num & 3.8340 & 1.1270 & 3.40 & 0.0007 \\ 
+		GenderM & 707.5733 & 29.0924 & 24.32 & 2e-16  \\ 
+		Marital\_Status & -44.7599 & 26.7599 & -1.67 & 0.0944 \\ 
+		City\_CategoryB & 232.8961 & 31.1291 & 7.48 & 7.38e-14 \\ 
+		City\_CategoryC & 816.1364 & 33.3939 & 24.44 & 2e-16  \\ 
+		Stay\_In\_Current\_City\_Years & -2.4060 & 9.7449 & -0.25 & 0.8050 \\ 
+		\hline
+	\end{tabular}
+\end{table}
+\\We can see in the table above that p-value of all the variables are significantly close to 0 unless $Marital_{-}Status$ and $Stay_{-}In_{-}Current_{-}City_{-}Years$. And then to perform this model, we can build another model(model2) who doesn't contain does variables. We have in the table below the summary of model2.
+
+% latex table generated in R 4.1.2 by xtable 1.8-4 package
+% Wed Dec  8 20:33:21 2021
+\begin{table}[ht]
+	\caption{Summary Model2}
+	\centering
+	\begin{tabular}{rrrrr}
+		\hline
+		& Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+		\hline
+		(Intercept) & 8271.6583 & 48.2288 & 171.51 &  2e-16 \\
+		\hline 
+		Age\_num & 3.2739 & 1.0757 & 3.04 & 0.0023 \\ 
+		\hline
+		GenderM & 708.0186 & 29.0878 & 24.34 &  2e-16 \\ 
+		\hline
+		City\_CategoryB & 232.3207 & 31.1195 & 7.47 & 8.34e-14 \\ 
+		\hline
+		City\_CategoryC & 815.7573 & 33.3829 & 24.44 &  2e-16 \\ 
+		\hline
+	\end{tabular}
+\end{table}
+In this second model, all the p-values of the variables are significantly close to 0. Now let compare the two model with anova and AIC
+
+\begin{table}[H]
+	\caption{Comparaison table}
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{AIC}
+		 \begin{tabular}[t]{rrr}
+		 	\hline
+		 	& df & AIC \\ 
+		 	\hline
+		 	model2 & 6.00 & 3160097.61 \\ 
+		 	model1 & 8.00 & 3160098.77 \\ 
+		 	\hline
+		 \end{tabular}
+	\end{subtable} %
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{ANOVA}
+		\scalebox{0.8}{ 
+		\begin{tabular}{lrrrrrr}
+			\hline
+			& Res.Df & RSS & Df & Sum of Sq & F & Pr($>$F) \\ 
+			\hline
+			1 & 158995 & 3984905477192.59 &  &  &  &  \\ 
+			2 & 158993 & 3984834089188.59 & 2 & 71388004.00 & 1.42 & 0.2407 \\ 
+			\hline
+		\end{tabular}}
+	\end{subtable} 
+\end{table}
+We can see in the two table above that model2 has the smallest AIC and also the p-value in the ANOVA table is not very small this mean that there is no way to choose the most complicate model then model2 is better than model1.\\
+\\ 
+2) Interpretation of the model.
+ 
+\begin{itemize}
+	\item For every unit increase of Age, the purchase amount is expected to increases by about 3.27
+	\item The standard error around the fitted intercept is quite small (48).
+	\item Clients from the city category C are expected to buy 708 more than clients from the category A and client from category B are expected to buy 232 more than clients from category A
+	\item Men are expected to buy 708 more than women
+\end{itemize}
+3) Let check if all the assumption about the model met
+
+
+\begin{figure}[H]
+	\centering
+	\scalebox{0.5}{
+		\begin{subfigure}[b]{0.4\textwidth}
+			\includegraphics[width=\textwidth]{linearity}
+			\caption{linearity}
+			\label{fig:trapez1}
+		\end{subfigure}
+		~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+		%(or a blank line to force the subfigure onto a new line)
+		\begin{subfigure}[b]{0.4\textwidth}
+			\includegraphics[width=\textwidth]{normality}
+			\caption{normality}
+			\label{fig:trapez2}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.4\textwidth}
+			\includegraphics[width=\textwidth]{homos}
+			\caption{homoskedasticity}
+			\label{fig:trapez2}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.4\textwidth}
+			\includegraphics[width=\textwidth]{outliers}
+			\caption{outliers}
+			\label{fig:trapez2}
+		\end{subfigure}	}
+	
+	\caption{Plot of different accuracy}\label{fig:trapez}
+\end{figure}
+
+
+\begin{itemize}
+	\item Linearity:  With this model, the linearity is there but it is not very good
+	\item Normality: We can see in subfigure (b) that the normality of our model is not too bad
+	\item homoskedasticity: We can see that our model doesn't fit the assumption of homoskedasticity very well but it is not very bad 
+	\item Outliers: From the plot of the outliers in the sub figure (d), we can see some data which can be removed to improve the model
+\end{itemize}
+4) Help the company to improve their sales
+
+\begin{itemize}
+	\item according to what we say in the interpretation of the model, the company should do more advertising in the city category C to attract more clients from that city also clients from category B
+	\item The company should go through to more old client because when the age of clients because if the age of the clients increase from one unit, we the purchase amount which increase from around 3
+	\item The company should attract more men than women
+\end{itemize}
+5) Possible ways to improve the model:
+\begin{itemize}
+	\item We can investigate a non linear structure
+	\item As indicate by the outliers, we can remove to our the observation from row 24859, 52407, 140019
+\end{itemize}
+6) Comparison of the final model with the model built on gender and age only.\\
+\\We define the model built on age and Gender only as model3. We have the table of comparison below
+% latex table generated in R 4.1.2 by xtable 1.8-4 package
+% Sat Dec 11 14:34:33 2021
+\begin{table}[H]
+	\caption{Comparison between model2 and model3}
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{AIC}
+		 \begin{tabular}{rrr}
+		 		\hline
+		 		& df & AIC \\ 
+		 		\hline
+		 		model2 & 6.00 & 3160097.61 \\ 
+		 		model3 & 4.00 & 3160755.17 \\ 
+		 		\hline
+		 	\end{tabular}
+	\end{subtable} %
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{ANOVA}
+		\scalebox{0.7}{ \begin{tabular}{lrrrrrr}
+				\hline
+				& Res.Df & RSS & Df & Sum of Sq & F & Pr($>$F) \\ 
+				\hline
+				1 & 158995 & 3984905477192.59 &  &  &  &  \\ 
+				2 & 158997 & 4001520005780.22 & -2 & -16614528587.63 & 331.45 & 2.2e-16 \\ 
+				\hline
+			\end{tabular}}
+	 	\end{subtable} 
+\end{table} 
+We can see inside the table of AIC above that model2 have the smallest AIC and we have in the table of anova that the p-value is significantly close to 0 which mean that the most complicated model is the better one. We conclude that model2 is better than model3 
+
+\section*{Task2}
+
+Show that the poisson distribution is a member of the exponential family\\
+\\$X$ follow a poisson distribution of parameter $\lambda$ if $P(X = n)= \frac{\lambda^{n}}{n!}e^{-\lambda}$ $\forall n \in\mathbb{N}$\\0
+  We want to write $P(X=n)$ on the form $$\displaystyle \exp(\frac{n\theta-b(\theta)}{a(\phi)}+c(n,\theta))$$\\
+We  have:
+\begin{align*}
+	P(X = n, \theta,\phi )& = \frac{\lambda^{n}}{n!}e^{-\lambda}
+	=e^{-\lambda}e^{\ln(\frac{\lambda^{n}}{n!})}
+	=e^{n\ln(\lambda)-\ln(n!)-\lambda}
+	=e^{n\ln(\lambda)-\lambda-\ln(n!)}
+	\end{align*}
+From this last inequality we can deduce : $\theta=\ln(\lambda)$, $b(\theta)=\lambda$, $a(\phi)=1$ and $c(n,\lambda)=-\ln(n!)$ which yield:   $b(\theta)=e^{\theta}$\\
+\\This permit us to conclude that Poisson distribution is member of the exponential family
+
+
+\section*{Task 3}
+We have the model:
+\begin{align*}
+	\mu_{i}=\mathbb{E}[Y_{i}]=\frac{\alpha x_{i}}{\gamma+x_{i}}
+\end{align*}
+1) Let set the model as a GLM.
+\begin{align*}
+\mu_{i}=\frac{\alpha x_{i}}{\gamma+x_{i}}&\implies \frac{1}{\mu_{i}}=\frac{\gamma+x_{i}}{\alpha x_{i}}\\
+&\implies g(\mu_{i})=\frac{1}{\alpha}+\frac{\gamma}{\alpha}\times \frac{1}{x_{i}}\quad \text{we know that $g(\mu_{i})=\eta_{i}$}\\
+&\implies \eta_{i}=\frac{1}{\alpha}+\frac{\gamma}{\alpha}\times \frac{1}{x_{i}}\\
+&\implies \eta_{i}=\beta_{0}+\beta_{1}X_{i}\quad\text{where $\beta_{0}=\frac{1}{\alpha}$, $\beta_{1}=\frac{\gamma}{\alpha}$, and $X_{i}=\frac{1}{x_{i}}$}
+\end{align*}
+Then, we have the linear form of the model.\\
+\\2) Let write the regression parameter vector and the design matrix in terms of $\alpha$ and $\gamma$\\
+\\We assume our sample is a sample of size $n$ then we have:
+\begin{align*}
+	\eta_{i}=\beta_{0}+\beta_{1}X_{i}\quad\forall i=1,2,\dots,n&\implies \begin{pmatrix}
+	\eta_{1}	\\
+	\eta_{2}	\\
+	\vdots\\
+	\eta_{n}	
+	\end{pmatrix}=\begin{pmatrix}{}
+1	& X_{1} \\
+1	& X_{2} \\
+\vdots	&\vdots  \\
+1	& X_{n}
+\end{pmatrix}\times\begin{pmatrix}
+\beta_{0}\\
+\beta_{1} 
+\end{pmatrix}\\
+&\implies \eta=X\beta
+\end{align*}
+Where $\eta=\begin{pmatrix}
+	\eta_{1}	\\
+	\eta_{2}	\\
+	\vdots\\
+	\eta_{n}	
+\end{pmatrix}$, The design matrix is $X=\begin{pmatrix}{}
+1	& X_{1} \\
+1	& X_{2} \\
+\vdots	&\vdots  \\
+1	& X_{n}
+\end{pmatrix}=\begin{pmatrix}{}
+1	&  \frac{1}{x_{1}} \\
+1	&  \frac{1}{x_{2}} \\
+\vdots	&\vdots  \\
+1	&  \frac{1}{x_{n}} 
+\end{pmatrix}$ and the regression parameter vector is $\beta=\begin{pmatrix}
+\beta_{0}\\
+\beta_{1} 
+\end{pmatrix}=\begin{pmatrix}
+ \frac{1}{\alpha}\\
+ \frac{\gamma}{\alpha}
+\end{pmatrix}$
+\end{document}

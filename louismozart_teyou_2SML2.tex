@@ -1,0 +1,341 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Template for AIMS Rwanda Assignments         %%%              %%%
+%%% Author:   AIMS Rwanda tutors                             %%%   ###        %%%
+%%% Email: tutors2017-18@aims.ac.rw                               %%%   ###        %%%
+%%% Copyright: This template was designed to be used for    %%% #######      %%%
+%%% the assignments at AIMS Rwanda during the academic year %%%   ###        %%%
+%%% 2017-2018.                                              %%%   #########  %%%
+%%% You are free to alter any part of this document for     %%%   ###   ###  %%%
+%%% yourself and for distribution.                          %%%   ###   ###  %%%
+%%%                                                         %%%              %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%% Ensure that you do not write the questions before each of the solutions because it is not necessary. %%%%%% 
+
+\documentclass[12pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% packages %%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{wasysym}
+\usepackage[all]{xy}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{psfrag}
+\usepackage{float}
+\usepackage{mathrsfs}
+\usepackage{multirow,rotating}
+%%%%%%%%%%%%%%%%%%%%% students data %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\student}{Louis Mozart Kamdem}
+\newcommand{\course}{LaTex}
+\newcommand{\assignment}{1}
+
+%%%%%%%%%%%%%%%%%%% using theorem style %%%%%%%%%%%%%%%%%%%%
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{quest}{Question}[section]
+
+%%%%%%%%%%%%%%  Shortcut for usual set of numbers  %%%%%%%%%%%
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%% title page %%%%%%%%%%%%%%%%%%%%%%%%%%
+	\thispagestyle{empty}
+	\begin{center}
+		\textbf{AFRICAN INSTITUTE FOR MATHEMATICAL SCIENCES \\[0.5cm]
+			(AIMS RWANDA, KIGALI)}
+		\vspace{1.0cm}
+	\end{center}
+	
+	%%%%%%%%%%%%%%%%%%%%% assignment information %%%%%%%%%%%%%%%%
+	\noindent
+	\rule{17cm}{0.2cm}\\[0.3cm]
+	Name:\student \hfill Assignment Number: 2\\[0.1cm]
+	Course: SML \hfill Date: \today\\
+	\rule{17cm}{0.05cm}
+	\vspace{1.0cm} 
+	\subsubsection*{Exercice4}
+	
+\begin{enumerate}
+
+\item Comparison of the four learning machine 
+ 
+\begin{table}[H]
+	\caption{Confusion matrix of kNN for givens value of k}
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{k = 1}
+	\begin{tabular}{rrr}
+		\hline
+		& 0 & 1 \\ 
+		\hline
+		0 &  37 &   0 \\ 
+		1 &   0 &  42 \\ 
+		\hline
+	\end{tabular}
+	\end{subtable} 
+\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{k = 3}
+		\scalebox{1}{ \begin{tabular}{rrr}
+				\hline
+				& 0 & 1 \\ 
+				\hline
+				0 &  24 &  13 \\ 
+				1 &   4 &  38 \\ 
+				\hline
+		\end{tabular}}
+	\end{subtable} \\\\\\
+
+\begin{subtable}{.5\linewidth}
+ 	\centering
+ 	\caption{k = 5}
+ 	\scalebox{1}{ \begin{tabular}{rrr}
+ 			\hline
+ 			& 0 & 1 \\ 
+ 			\hline
+ 			0 &  21 &  16 \\ 
+ 			1 &   6 &  36 \\ 
+ 			\hline
+ 	\end{tabular}}
+ \end{subtable}
+\begin{subtable}{.5\linewidth}
+	\centering
+	\caption{k = 7}
+	\scalebox{1}{ \begin{tabular}{rrr}
+			\hline
+			& 0 & 1 \\ 
+			\hline
+			0 &  21 &  16 \\ 
+			1 &   8 &  34 \\ 
+			\hline
+	\end{tabular}}
+\end{subtable} 
+
+ 
+\end{table} 	
+	
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=7cm,width=14cm]{plot1}
+		\caption{ROC curves}
+\end{figure}
+	
+\item Comment on the ROC reveal
+
+We Observe from both of the confusion matrix that the 1-NN learning machine is doing a perfect job which is normal because he have a very high complexity as we can see in ROC curve and this come from the fact that the whole data is used as the same time as test and training meaning. Also we can observe from the curves above that when $k$ increase, the KNN model under perform which was also expected because because the training set and the test set is the whole data
+
+\item \begin{itemize}
+	\item Plot of the comparative boxplot
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[height=7cm,width=14cm]{plot2}
+		\caption{Comparative boxplot}
+	\end{figure}
+	\item Comment on the distribution of the test error 
+	
+We observe on the figure above that the median of the learning machine 1NN, 5NN and 7NN are almost the same but among all the four learning machine, 1NN have the smallest variance followed by 7NN  and 3NN.
+
+	
+\end{itemize}	
+\end{enumerate}	
+
+\subsubsection*{Exercice3}
+
+
+\begin{enumerate}
+	
+\item Display of the confusion matrix
+\begin{table}[H]
+	\caption{Confusion matrix of kNN for givens value of k on the training set}
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{k = 1}
+		\begin{tabular}{rrr}
+			\hline
+			& -1 & 1 \\ 
+			\hline
+			-1 & 6265 &   0 \\ 
+			1 &   0 & 6742 \\ 
+			\hline
+		\end{tabular}
+	\end{subtable} 
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{k = 7}
+		\scalebox{1}{ \begin{tabular}{rrr}
+				\hline
+				& -1 & 1 \\ 
+				\hline
+				-1 & 6209 &  56 \\ 
+				1 &  15 & 6727 \\ 
+				\hline
+		\end{tabular}}
+	\end{subtable} \\\\\\
+	
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{k = 9}
+		\scalebox{1}{ \begin{tabular}{rrr}
+				\hline
+				& -1 & 1 \\ 
+				\hline
+				-1 & 6200 &  65 \\ 
+				1 &  15 & 6727 \\ 
+				\hline
+		\end{tabular}}
+	\end{subtable}
+	\end{table} 	
+The confusion matrix on the training set show that the training set is a sample of 13007 observations. And  
+
+\begin{table}[H]
+	\caption{Confusion matrix of kNN for givens value of k on the test set}
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{k = 1}
+		\begin{tabular}{rrr}
+			\hline
+			& -1 & 1 \\ 
+			\hline
+			-1 & 1012 &  16 \\ 
+			1 &   0 & 1135 \\ 
+			\hline
+		\end{tabular}
+	\end{subtable} 
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{k = 7}
+		\scalebox{1}{ \begin{tabular}{rrr}
+				\hline
+				& -1 & 1 \\ 
+				\hline
+				-1 & 1003 &  25 \\ 
+				1 &   0 & 1135 \\ 
+				\hline
+		\end{tabular}}
+	\end{subtable} \\\\\\
+	
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{k = 9}
+		\scalebox{1}{ \begin{tabular}{rrr}
+				\hline
+				& -1 & 1 \\ 
+				\hline
+				-1 & 1000 &  28 \\ 
+				1 &   0 & 1135 \\ 
+				\hline
+		\end{tabular}}
+	\end{subtable}
+	
+\end{table} 	
+
+\item ROC curve in both training and test set
+	
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[height=8cm,width=7cm]{roc_test}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[height=8cm,width=8cm]{roc_train}
+	\end{subfigure}
+	\caption{ROC curve in test and train set }
+\end{figure}
+	
+	
+\item Identify two false positives and two false negatives at the test phase, and in each case,
+plot the true image against its falsely predicted counterpart.
+	
+
+\item  Comment on any pattern that might have emerged.
+	
+	
+	
+\item  Perform principal component analysis on the data matrix and extract the first two com-
+ponents and plot them using the R Code provided
+	
+Performing the principal components analysis yield the figure below
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=8cm,width=15cm]{blandine}
+	\caption{10 Principals Components}
+\end{figure}
+	
+On the picture above, we observe the 10 principals components of our datasetand we can see that the first components can explain the  whole dataset at almost $25\%$ the second components can explain the whole dataset at around $12\%$. Let show a plot of those two principals components.
+	
+	
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=8cm,width=15cm]{blandine1}
+	\caption{2 Principals Components}
+\end{figure}	
+
+\item 	Compare the predictive performance of 7NN on two PC scores to the one yielded by all
+the original variables. Provide a comprehensive comment.
+
+
+The confusion matrix built with the principals components using 7NN on the test set is given by:
+
+\begin{table}[H]
+	\centering
+	\caption{Confusion matrix of the 7NN on the 2 principals components}
+	\begin{tabular}{rrr}
+		\hline
+		& -1 & 1 \\ 
+		\hline
+		-1 & 6168 &  97 \\ 
+		1 &  97 & 6645 \\ 
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=8cm,width=15cm]{blandine2}
+	\caption{ROC of 2 PC vs all variables on 7NN}
+\end{figure}
+The ROC curves and the confusion matrix above clearly show that the model 7NN built with all the variables is better
+then the one built with only the two components analysis which is clear because using only the two PC, there are mini details which are not taking in account while building the model
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

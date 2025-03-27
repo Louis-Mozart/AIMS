@@ -1,0 +1,382 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Template for AIMS Rwanda Assignments         %%%              %%%
+%%% Author:   AIMS Rwanda tutors                             %%%   ###        %%%
+%%% Email: tutors2017-18@aims.ac.rw                               %%%   ###        %%%
+%%% Copyright: This template was designed to be used for    %%% #######      %%%
+%%% the assignments at AIMS Rwanda during the academic year %%%   ###        %%%
+%%% 2017-2018.                                              %%%   #########  %%%
+%%% You are free to alter any part of this document for     %%%   ###   ###  %%%
+%%% yourself and for distribution.                          %%%   ###   ###  %%%
+%%%                                                         %%%              %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%% Ensure that you do not write the questions before each of the solutions because it is not necessary. %%%%%% 
+
+\documentclass[12pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% packages %%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{wasysym}
+\usepackage[all]{xy}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{psfrag}
+\usepackage{float}
+\usepackage{mathrsfs}
+%%%%%%%%%%%%%%%%%%%%% students data %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\student}{Louis Mozart Kamdem}
+\newcommand{\course}{LaTex}
+\newcommand{\assignment}{1}
+
+%%%%%%%%%%%%%%%%%%% using theorem style %%%%%%%%%%%%%%%%%%%%
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{quest}{Question}[section]
+
+%%%%%%%%%%%%%%  Shortcut for usual set of numbers  %%%%%%%%%%%
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%% title page %%%%%%%%%%%%%%%%%%%%%%%%%%
+	\thispagestyle{empty}
+	\begin{center}
+		\textbf{AFRICAN INSTITUTE FOR MATHEMATICAL SCIENCES \\[0.5cm]
+			(AIMS RWANDA, KIGALI)}
+		\vspace{1.0cm}
+	\end{center}
+	
+	%%%%%%%%%%%%%%%%%%%%% assignment information %%%%%%%%%%%%%%%%
+	\noindent
+	\rule{17cm}{0.2cm}\\[0.3cm]
+	Name:\student \hfill Assignment Number: 1\\[0.1cm]
+	Course: SML \hfill Date: \today\\
+	\rule{17cm}{0.05cm}
+	\vspace{1.0cm} 
+	
+	\textbf{\textit{Exercice 3}}\\
+\\We consider a linear regression analysis in $\mathbb{R}^{2}$ with $Y_{i}=\theta_{1}x_{i1}+\theta_{2}x_{i2}+\sigma Z_{i}$ where $Z_{i}\AC \mathcal{N}(0,1)$ for $i = 1,\dots, n$. We have the data matrix
+\begin{align}
+	X = \begin{bmatrix}
+		1&-2\\
+		-2&1\\
+		4&1
+	\end{bmatrix}
+\end{align}
+	 
+\begin{enumerate}
+	\item Let compute $X^{T}X$
+	\begin{align}
+		X^{T}X &= \begin{bmatrix}
+			1&-2&4\\
+			-2&1&1
+		\end{bmatrix}\begin{bmatrix}
+		1&-2\\
+		-2&1\\
+		4&1
+	\end{bmatrix}
+ = \begin{bmatrix}
+	21&0\\
+	0&6
+\end{bmatrix}
+	\end{align}
+\item $X^{T}X$ is a square matrix of shape $2\times2$
+\item Let find $(X^{T}X)^{-1}$\\\\
+The matrix $X^{T}X$ is a diagonal matrix and all the element of the diagonal are differents from 0 ie $X^{T}X$ is invertible and his inverse is the inverse of the element on the diagonal ie \begin{align}
+	(X^{T}X)^{-1} = \begin{bmatrix}
+		\frac{1}{26}&0\\
+		0&\frac{1}{6}
+	\end{bmatrix}
+\end{align}
+\item Let compute $\hat\theta =(X^{T}X)^{-1}X^{T}Y $ where $Y=\begin{bmatrix}
+	-5\\
+	4\\
+	-3
+\end{bmatrix}$\\
+\begin{align}
+  \hat{\theta} = \begin{bmatrix}
+  	\frac{1}{26}&0\\
+  	0&\frac{1}{6}
+  \end{bmatrix}\begin{bmatrix}
+  1&-2&4\\
+  -2&1&1
+\end{bmatrix}\begin{bmatrix}
+-5\\
+4\\
+-3
+\end{bmatrix} =\begin{bmatrix}
+\frac{1}{26}&0\\
+0&\frac{1}{6}
+\end{bmatrix}\begin{bmatrix}
+-25\\
+11
+\end{bmatrix} = \begin{bmatrix}
+-\frac{25}{21}&
+\frac{11}{6}
+\end{bmatrix}^{T}
+\end{align}
+\item Let compute the vector $\hat{Y}$ of estimated responses:\\
+We have \begin{align}
+	\hat{Y} = X\hat{\theta}=\begin{bmatrix}
+		1&-2\\
+		-2&1\\
+		4&1
+	\end{bmatrix}\begin{bmatrix}
+	-\frac{25}{21}&
+	\frac{11}{6}
+\end{bmatrix}^{T}=\begin{bmatrix}
+-\frac{34}{7}&\frac{59}{4}&-\frac{41}{14}
+\end{bmatrix}
+\end{align}
+\item Let compute the vector $e = Y-\hat{Y}$ of residual values:
+\begin{align}
+	e = Y-\hat{Y} = \begin{bmatrix}
+		-5\\
+		4\\
+		-3
+	\end{bmatrix}-\begin{bmatrix}
+	-\frac{34}{7}\\
+	\frac{59}{14}\\
+	-\frac{41}{14}
+\end{bmatrix} = \begin{bmatrix}
+-\frac{1}{7}&-\frac{3}{14}&-\frac{1}{14}
+\end{bmatrix}^{T}
+\end{align}
+\item Let find the value of SSE($\hat{\theta}$)\\
+\\we have: \begin{align}
+	SSE(\hat{\theta}) = \|Y-\hat{Y}\|_{2}^{2} = (\frac{1}{7})^{2}+(\frac{3}{14})^{2}+ (\frac{1}{14})^{2}= \frac{4+9+1}{14^{2}} = \frac{1}{14} \approx 0.07
+\end{align}
+\item let find the estimate $\hat{\sigma^{2}}^{}$\\
+\\ We have $\hat{\sigma^{2}}^{} = \frac{SSE(\hat{\theta})}{n-2}$ in our case, $n=3$ ie $\hat{\sigma^{2}}^{} = SSE(\hat{\theta})\approx 0.07$
+\item Find and write down the variance($\hat{\theta}$)\\
+\\We have \begin{align}
+	Var(\hat{\theta}) = \hat{\sigma^{2}}^{}(X^{T}X)^{-1}=\frac{1}{14}\begin{bmatrix}
+		\frac{1}{21}&0\\
+		0&\frac{1}{6}
+	\end{bmatrix}
+\end{align}
+\item Write the matrix $X^{T}X$ as a function of the identity matrix when the data matrix is $X=\begin{bmatrix}
+	1&-2\\
+	2&1
+\end{bmatrix}$
+
+We have \begin{align}
+	X^{T}X = \begin{bmatrix}
+		1&2\\
+		-2&1
+	\end{bmatrix}\begin{bmatrix}
+	1&-2\\
+	2&1
+\end{bmatrix}=\begin{bmatrix}
+5&0\\
+0&5
+\end{bmatrix}=5\begin{bmatrix}
+1&0\\
+0&1
+\end{bmatrix}=5I_{2}
+\end{align}
+Where $I_{2}$ is the $2\times2$ identity matrix
+\end{enumerate}
+
+\textbf{\textit{Exercice 1}}
+
+\begin{enumerate}
+	\item The input space in the problem is $\mathscr{X}=\mathbb{R}$ and it is of dimension 1
+	\item The output space in this problem is $\mathscr{Y}=\mathbb{R}$ and it is of dimension 1
+	\item $x = (x_{1},x_{2},\dots,x_{n})^{T}$ ie $x$ is of dimension $n$
+	\item $y = (y_{1},y_{2},\dots,y_{n})^{T}$ ie $y$ is of dimension $n$
+	\item In this case, the assumed conditional distribution of $Y_{i}$ given $x_{i}$ is a normal distribution of parameter $f(x_{i}) = \theta x_{i}$ and $\sigma^{2}$ ie:
+	\begin{align}
+		Y_{i}|x_{i}\sim\mathcal{N}(\theta x_{i},\sigma^{2})
+	\end{align}
+    since we have $y=(y_{1},y_{2},\dots,y_{n})$ and our model is homoskedastic, we deduce that \begin{align}
+    	y|x\sim \mathcal{N}(\mu,\Sigma)
+    \end{align}
+where $\mu = (\theta x_{1},\theta x_{2},\dots,\theta x_{n})^{T}$ and $\Sigma = \sigma^{2}I_{n}$ with $I_{n}$ which is the $n\times n$ identity matrix
+
+    \item Let rewrite the model in the additive form.
+    
+    The model can be rewrite as\begin{align}
+    	y_{i} =  f(x_{i})+\epsilon_{i}\quad\forall i=1,2,\dots,n
+    \end{align}
+Where $f\in\mathscr{H}$ and $\epsilon_{i}$ is a random noise ie 
+\begin{align}\label{13}
+	y_{i} = \theta x_{i}+\epsilon_{i}\quad\forall i=1,2,\dots,n
+\end{align}
+Let find the distribution of $\epsilon_{i}$:\\
+We have\begin{align}
+	y_{i}|x_{i}  = \theta x_{i}+\epsilon_{i}\implies \epsilon_{i} = y_{i}|x_{i}-\theta x_{i}
+\end{align}
+Since $y_{i}|x_{i}\overset{}{}\sim\mathcal{N}(\theta x_{i},\sigma^{2})$, we deduce that $\epsilon_{i}\overset{iid}{\sim}\mathcal{N}(0,\sigma^{2})\quad\forall i=1,2,\dots,n$
+
+\item Type of statistical machine learning :
+\begin{itemize}
+	\item We have our input space is continuous and of dimension 1
+	\item The output space is also continuous and also of dimension 1
+	\item The space function $\mathscr{H}$ is the space of linear function
+\end{itemize}
+With all this, we conclude that the machine learning task is a simple linear regression model without intercept.
+\item Let find $\frac{\partial SSE_{n}(a)}{\partial a}$
+
+
+We have:
+\begin{align}
+	SSE_{n}(a) = \|y-ax\|_{2}^{2}= <y-ax,y-ax>
+\end{align}
+This implies that:\begin{align*}
+\frac{\partial SSE_{n}(a)}{\partial a}&=<-x, y-ax>+<y-ax,-x>\\
+& = 2<-x,y-ax>\\
+& = -2x^{T}(y-ax)
+\end{align*}
+\item Let show that \begin{align}
+	\hat{\theta} = \underset{\theta\in\mathbb{R^{*}}}{argmin}\{SSE_{n}(\theta)\} = \frac{x^{T}y}{x^{T}x}
+\end{align}
+
+We have : $\frac{\partial SSE_{n}(\theta)}{\partial \theta} = -2x^{T}(y-\theta x) $
+\begin{align*}
+	\frac{\partial SSE_{n}(\theta)}{\partial \theta} =0&\implies -2x^{T}(y-\hat\theta x)=0\\
+	&\implies x^{T}x\hat\theta = x^{T}y\\
+	&\implies \hat{\theta} = \frac{x^{T}y}{x^{T}x}
+\end{align*}
+Futher more, we have \begin{align}
+\frac{\partial^{2} SSE_{n}(\theta)}{\partial \theta^{2}}=2x^{T}x=2\|x\|^{2}\geq0
+\end{align}
+This mean that $\frac{\partial^{2} SSE_{n}(\hat\theta)}{\partial \theta^{2}}\geqslant0$
+ie $\hat{\theta}=\underset{\theta\in\mathbb{R^{*}}}{argmin}\{SSE_{n}(\theta)\} = \frac{x^{T}y}{x^{T}x}$
+
+\item Let find the mean[$\hat\theta$] = $\mathbb{E}$[$\hat\theta$]\\
+
+We have:\begin{align*}
+	\mathbb{E}[\hat\theta]& = \mathbb{E}\left(\frac{x^{T}y}{x^{T}x}\right)
+	 = \frac{1}{x^{T}x}\mathbb{E}(x^{T}y)
+	 = \frac{1}{x^{T}x}\mathbb{E}(\sum_{i=1}^{n}x_{i}y_{i})
+	 = \frac{1}{x^{T}x}\sum_{i=1}^{n}\mathbb{E}(x_{i}y_{i})
+	 = \frac{1}{x^{T}x}\sum_{i=1}^{n}\mathbb{E}[x_{i}(\theta x_{i}+\epsilon_{i})]\\
+	& = \frac{1}{x^{T}x}\sum_{i=1}^{n}(\theta x_{i}^{2}+x_{i}\mathbb{E}(\epsilon_{i}))\quad \text{but we know that $\mathbb{E}(x_{i})=0$}\\
+	& = \frac{1}{x^{T}x}\sum_{i=1}^{n}\theta x_{i}^{2} = \frac{1}{x^{T}x}\theta x^{T}x = \theta\implies \mathbb{E}[\hat\theta] = \theta
+	\end{align*}
+\item Let find the variance[$\hat\theta$] = $\mathbb{V}$[$\hat\theta$]\\
+
+We have:\begin{align*}
+	\mathbb{V}(\hat{\theta}) &= \mathbb{V}\left(\frac{x^{T}y}{x^{T}x}\right) = \frac{1}{(x^{T}x)^{2}}\mathbb{V}(x^{T}y) = \frac{1}{(x^{T}x)^{2}}\mathbb{V}(\sum_{i=1}^{n}x_{i}(\theta x_{i}+\epsilon_{i}))\quad\text{Since the $\epsilon_{i}$ are all iid, we can have}\\ &=\frac{1}{(x^{T}x)^{2}}\sum_{i=1}^{n}\mathbb{V}(\theta x_{i}^{2}+ x_{i}\epsilon_{i}) = \frac{1}{(x^{T}x)^{2}}\sum_{i=1}^{n}\mathbb{V}(x_{i}\epsilon_{i})=\frac{1}{(x^{T}x)^{2}}\sum_{i=1}^{n}x_{i}^{2}\mathbb{V}(\epsilon_{i})\quad\text{and we have $\mathbb{V}(\epsilon_{i}) = \sigma^{2}$}\\
+	&=\frac{\sigma^{2}}{(x^{T}x)^{2}}\sum_{i=1}^{n}x_{i}^{2}=\frac{\sigma^{2}}{(x^{T}x)^{2}}x^{T}x \implies\mathbb{V}(\hat{\theta})= \frac{\sigma^{2}}{x^{T}x}
+\end{align*}
+
+\item Let find $\mathbb{E}[Y_{i}|x_{i}]$:
+
+We have $Y_{i}|x_{i}\sim \mathcal{N}(\theta x_{i},\sigma^{2})\implies\mathbb{E}[Y_{i}|x_{i}] = \theta x_{i} $
+
+\item Let write $y$ as a function of $x$, $\theta$
+
+By equation (\ref{13}), we deduce that \begin{align}
+	y = \theta x+\epsilon
+\end{align}
+Where $\epsilon=\begin{bmatrix}
+	\epsilon_{1},\dots,\epsilon_{n}
+\end{bmatrix}^{T}$ and $\epsilon\overset{iid}{\sim}\mathcal{N}(0_{\mathbb{R^{}}^{n}},\sigma^{2}I_{n})$ with $I_{n}$ which is the $n\times n$ identity matrix
+
+\item Let write $\hat{y}$ as a function of $x$ and $y$:
+
+We have: $\widehat{Y_{i}}=\widehat{\theta}x_{i}$ $\forall i = 1,2,\dots,n\implies \widehat{Y}=\widehat{\theta}x = \widehat{Y}=\frac{x^{T}y}{x^{T}x}x$
+
+\item Let find the $\mathbb{V}[Y_{i}|x_{i}] $ and $\mathbb{V}[Y_{}|x_{}] $
+
+We know that $Y_{i}|x_{i}\sim \mathcal{N}(\theta x_{i},\sigma^{2})\implies \mathbb{V}[Y_{i}|x_{i}] = \sigma^{2} $
+
+With this, we deduce that $\mathbb{V}[Y_{}|x_{}] =\sigma^{2}I_{n} $
+
+
+\item Let find $\mathbb{E}[\widehat{Y}_{i}|x_{i}]$ and $\mathbb{E}[\widehat{Y}_{}|x_{}]$
+ \begin{align}
+ \mathbb{E}[\widehat{Y}_{i}|x_{i}]=	\mathbb{E}[\widehat{\theta}_{}x_{i}|x_{i}]=\mathbb{E}[\widehat{\theta}x_{i}] = x_{i}\mathbb{E}[\widehat{\theta}] = \theta x_{i}
+ \end{align}
+Then we can deduce that: $\mathbb{E}[\widehat{Y}_{}|x_{}]=\begin{bmatrix}
+	\theta x_{1}&\theta x_{2}&\dots&\theta x_{n}
+\end{bmatrix}^{T}$ 
+\item Let find  $\mathbb{V}[\hat Y_{i}|x_{i}] $ and $\mathbb{V}[\hat Y_{}|x_{}]  $
+\begin{align}
+	\mathbb{V}[\hat Y_{i}|x_{i}] = \mathbb{V}[\hat \theta x_{i}|x_{i}]=\mathbb{V}[\hat\theta x_{i}]=x_{i}^{2}\mathbb{V}[\hat \theta] = x_{i}^{2}\frac{\sigma^{2}}{x^{T}x} 
+\end{align}
+This implies that:\begin{align}
+\mathbb{V}[\hat Y_{}|x_{}]=\frac{\sigma^{2}}{x^{T}x}\begin{bmatrix}
+		x_{1}^{2}&&0\\
+		&\ddots&\\
+	    0&&x_{n}^{2}
+	\end{bmatrix}
+\end{align}
+
+\item Let find the distribution of $\widehat{\theta}$
+
+\begin{align}
+\widehat{\theta} = \frac{x^{T}y}{x^{T}x}=\frac{x^{T}(\theta x+\epsilon)}{x^{T}x}=\theta+ \frac{x^{T}\epsilon}{x^{T}x}
+\end{align}
+We have \begin{align}
+	x^{T}\epsilon = \sum_{i=1}^{n}x_{i}\epsilon_{i}\quad &\text{since $\epsilon_{i}\sim\mathcal{N}(0,\sigma^{2})$,  $x_{i}\epsilon_{i}\sim\mathcal{N}(0,\sigma^{2}x_{i}^{2})$}\\
+	&\implies x^{T}\epsilon= \sum_{i=1}^{n}x_{i}\epsilon_{i}\sim\mathcal{N}(0,\sigma^{2}x^{T}x)\\
+	&\implies \frac{x^{T}\epsilon}{x^{T}x}\sim \mathcal{N}(0,\frac{\sigma^{2}x^{T}x}{(x^{T}x)^{2}})\\
+	&\implies \theta+ \frac{x^{T}\epsilon}{x^{T}x}\sim \mathcal{N}(\theta,\frac{\sigma^{2} }{(x^{T}x)^{}})\\
+	&\implies \widehat{\theta}\sim\mathcal{N}(\theta,\frac{\sigma^{2} }{x^{T}x^{}})
+\end{align}
+
+\item Let Determine the distribution of $\widehat{Y_{i}}$ given $x_{i}$ and for $\widehat{y}$ given $x\mathcal{N}(\theta,\frac{\sigma^{2} }{(x^{T}x)^{}})$
+
+\begin{align}
+ p(\widehat{Y}_{i}|x_{i})=p(\hat{\theta}x_{i}|x_{i})=p(\hat\theta x_{i})
+\end{align}
+ ie $\widehat{Y}_{i}|x_{i}$ has the same distribution as $\hat\theta x_{i}$ and we know that $\hat{\theta}\sim\mathcal{N}(\theta,\frac{\sigma^{2} }{x^{T}x^{}})$ This implies that $\hat{\theta}x_{i}\sim\mathcal{N}(\theta x_{i},\frac{\sigma^{2}x_{i}^{2}}{x^{T}x^{}})\implies\widehat{Y}_{i}|x_{i}\sim\mathcal{N}(\theta x_{i},\frac{\sigma^{2}x_{i}^{2}}{x^{T}x^{}}) $
+
+By this, we deduce that $\widehat{y}|x\sim\mathcal{N}(\mu,\Sigma)$ with $\mu=\theta\begin{bmatrix}
+	x_{1}\\
+	\vdots\\
+	x_{n}
+\end{bmatrix}$ and $\Sigma=\frac{\sigma^{2}}{x^{T}x}\begin{bmatrix}
+x_{1}^{2}&&0\\
+&\ddots&\\
+0&&x_{n}^{2}
+\end{bmatrix}$
+
+
+\item Let find the estimator $\widehat{\sigma^{2}}$ of $\sigma^{2}$
+
+We have: $p(y_{i}|x_{i})=\frac{1}{\sqrt{2\pi\sigma^{2}}}e^{-\frac{1}{2\sigma^{2}}(y_{i}-\theta x_{i})^{2}}$
+
+The likelihood of this distribution is:
+\begin{align*}
+\mathcal{L}_{n}(\sigma^{2},\theta)&=\prod_{i=1}^{n}p(y_{i}|x_{i}) = \prod_{i=1}^{n}\frac{1}{\sqrt{2\pi\sigma^{2}}}e^{-\frac{1}{2\sigma^{2}}(y_{i}-\theta x_{i})^{2}}\\
+& = \left(\frac{1}{2\pi\sigma^{2}}\right)^{n/2}e^{-\frac{1}{2\sigma^{2}}\sum_{i=1}^{n}(y_{i}-\theta x_{i})^{2}}
+\end{align*}
+We deduce then the log-likelihood by:
+\begin{align*}
+	\mathscr{L} (\sigma^{2},\theta)& = \log(\mathcal{L}_{n}(\sigma^{2},\theta))\\
+	& = -\frac{n}{2}\log(2\pi\sigma^{2})-\frac{1}{2\sigma^{2}}\sum_{i=1}^{n}(y_{i}-\theta x_{i})^{2}\\
+	&\implies \frac{\partial \mathscr{L} (\sigma^{2},\theta) }{\partial \sigma^{2}} = -\frac{n}{2\sigma^{2}}+\frac{1}{2\sigma^{4}}\sum_{i=1}^{n}(y_{i}-\theta x_{i})^{2}
+\end{align*}
+To have the estimator of $\sigma^{2}$, we just need to solve the last equation above equal to zero
+\begin{align*}
+	\frac{\partial \mathscr{L} (\sigma^{2},\theta) }{\partial \sigma^{2}} =0&\implies -\frac{n}{2\widehat{\sigma^{2}}}+\frac{1}{2\widehat{\sigma^{4}}}\sum_{i=1}^{n}(y_{i}-\widehat{\theta} x_{i})^{2}=0\\
+	&\implies \widehat{\sigma^{2}} = \frac{1}{n}\sum_{i=1}^{n}(y_{i}-\widehat{\theta} x_{i})^{2}
+\end{align*}
+
+\end{enumerate}
+\end{document}

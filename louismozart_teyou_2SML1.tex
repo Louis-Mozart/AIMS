@@ -1,0 +1,341 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Template for AIMS Rwanda Assignments         %%%              %%%
+%%% Author:   AIMS Rwanda tutors                             %%%   ###        %%%
+%%% Email: tutors2017-18@aims.ac.rw                               %%%   ###        %%%
+%%% Copyright: This template was designed to be used for    %%% #######      %%%
+%%% the assignments at AIMS Rwanda during the academic year %%%   ###        %%%
+%%% 2017-2018.                                              %%%   #########  %%%
+%%% You are free to alter any part of this document for     %%%   ###   ###  %%%
+%%% yourself and for distribution.                          %%%   ###   ###  %%%
+%%%                                                         %%%              %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%% Ensure that you do not write the questions before each of the solutions because it is not necessary. %%%%%% 
+
+\documentclass[12pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% packages %%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{wasysym}
+\usepackage[all]{xy}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{psfrag}
+\usepackage{float}
+\usepackage{mathrsfs}
+%%%%%%%%%%%%%%%%%%%%% students data %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\student}{Louis Mozart Kamdem}
+\newcommand{\course}{LaTex}
+\newcommand{\assignment}{1}
+
+%%%%%%%%%%%%%%%%%%% using theorem style %%%%%%%%%%%%%%%%%%%%
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{quest}{Question}[section]
+
+%%%%%%%%%%%%%%  Shortcut for usual set of numbers  %%%%%%%%%%%
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%% title page %%%%%%%%%%%%%%%%%%%%%%%%%%
+	\thispagestyle{empty}
+	\begin{center}
+		\textbf{AFRICAN INSTITUTE FOR MATHEMATICAL SCIENCES \\[0.5cm]
+			(AIMS RWANDA, KIGALI)}
+		\vspace{1.0cm}
+	\end{center}
+	
+	%%%%%%%%%%%%%%%%%%%%% assignment information %%%%%%%%%%%%%%%%
+	\noindent
+	\rule{17cm}{0.2cm}\\[0.3cm]
+	Name:\student \hfill Assignment Number: 1\\[0.1cm]
+	Course: SML \hfill Date: \today\\
+	\rule{17cm}{0.05cm}
+	\vspace{1.0cm} 
+	
+	
+	
+\textbf{\textit{Exercice 4}}	
+	
+\begin{enumerate}
+	\item Upper triangular pairwise scatterplot of the data:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[height=5cm,width=12cm]{scatterplot}
+		\caption{Upper triangular Scatterplot}
+	\end{figure}
+	
+From the above picture, the scatter plot of the response variable(score) with the variables motheriq, read and count tend to a straigh line means that those variables among all the other variables are the most correlated to the response variable.
+
+Now to see the most correlated variable we can made a correlation table with those four variables which yield: 
+
+\begin{table}[ht]
+	\centering
+	\caption{Correlation table between the most strongly correlated variables}
+	\begin{tabular}{rrrrr}
+		\hline
+		& score & count & motheriq & read \\ 
+		\hline
+		score & 1.00 & 0.54 & 0.57 & 0.53 \\ 
+		count & 0.54 & 1.00 & 0.02 & 0.91 \\ 
+		motheriq & 0.57 & 0.02 & 1.00 & -0.04 \\ 
+		read & 0.53 & 0.91 & -0.04 & 1.00 \\ 
+		\hline
+	\end{tabular}
+\end{table}
+	
+From the above table, we clearly identify that the most correlated variable to the response variable is motheriq	
+	
+\item Correlation matrix for the data.
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm,width=12cm]{corelation_matrix}
+	\caption{Correlation matrix}
+\end{figure}
+From the correlation, we see that the motheriq is the most correlated variable with the score
+
+\item Plot of the histogram and test of normality	
+
+We have the plots below:
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[height=5cm,width=5cm]{hist}
+	\end{subfigure}
+		\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[height=5cm,width=5cm]{hist_norm}
+	\end{subfigure}
+\caption{Histogram}
+\end{figure}
+	
+The second subfigure above show that the distribution of the response variable tend to follow a normal distribution. We can have the confirmation by doing a shapiro-wike test of normality on R which yield a p-value of 0.76 which is greather than 0.05 meaning that the output follow a normal distribution.
+	
+\item Performing the simple linear regression model
+
+The most important variable to fit a simple linear model with the score is motheriq. The table below give the summary of the model.
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{rrrrr}
+		\hline
+		& Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+		\hline
+		(Intercept) & 111.0930 & 11.8567 & 9.37 & 6.02e-11 \\ 
+		motheriq & 0.4066 & 0.1002 & 4.06 & 0.0003 \\ 
+		\hline
+	\end{tabular}
+\caption{SLR model}
+\end{table}
+
+\item generation of the 4 residuals plots
+
+\begin{figure}[H]
+
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\caption{Linearity}
+		\centering
+		\includegraphics[height=5cm,width=5cm]{1}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\textwidth}
+		\caption{Normality}
+		\centering
+		\includegraphics[height=5cm,width=5cm]{2}
+	\end{subfigure}
+
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\caption{Homoskedasticity}
+		\centering
+		\includegraphics[height=5cm,width=5cm]{3}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\textwidth}
+		\caption{Outliers}
+		\centering
+		\includegraphics[height=5cm,width=5cm]{4}
+	\end{subfigure}
+	
+\end{figure}
+
+We Observe from the plot below that the linearity asumption doesn't meet also the homoskedasticity doesn't meet well but is acceptable. From the outliers, we see  that there is some observations which badly influence the estimations of our parameters these include the observations 4,6,13,15,24,20
+
+
+\item For the we are going to use the model above, we see in the table of summary of the model that the estimated slope is 0.4066 this mean motheriq and score are positively correlated and when the motheriq increase from one unit, we have the score which increase of 0.4.
+
+\item Confidence bands and prediction bands
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm, width=12cm]{6}
+	\caption{Confident band and Interval band}
+\end{figure}
+With the figure above, we observe that our model indicate with 95 percent of confident that a mother iq of around 129 will give a score of around 160. Also the fitted points tend to follow the straight blue line which confirm the assumption of normality the response variable.
+
+\item Multiple linear regression
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{rrrrr}
+		\hline
+		& Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+		\hline
+		(Intercept) & 75.5085 & 24.0262 & 3.14 & 0.0039 \\ 
+		fatheriq & 0.2525 & 0.1376 & 1.84 & 0.0771 \\ 
+		motheriq & 0.4001 & 0.0729 & 5.49 & 7.33e-06  \\ 
+		speak & 0.1876 & 0.1477 & 1.27 & 0.2143 \\ 
+		count & 0.2065 & 0.2663 & 0.78 & 0.4446 \\ 
+		read & 7.5441 & 5.5864 & 1.35 & 0.1877 \\ 
+		edutv & -4.2024 & 2.2450 & -1.87 & 0.0717 \\ 
+		cartoons & -3.3390 & 2.0181 & -1.65 & 0.1092 \\ 
+		\hline
+	\end{tabular}
+\end{table}
+
+With this model, we can see that outside of the motheriq variable, all the other variables are useless because their p-value is greather than 0.05
+
+Comparing this with our first model using anova and aic show that
+
+\begin{table}[H]
+	\caption{Comparison between model and model1}
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{AIC}
+		\begin{tabular}{rrr}
+		\hline
+		& df & AIC \\ 
+		\hline
+		model1 & 9.00 & 179.65 \\ 
+		model & 3.00 & 203.27 \\ 
+		\hline
+		\end{tabular}
+	\end{subtable} %
+	\begin{subtable}{.5\linewidth}
+		\centering
+		\caption{ANOVA}
+		\scalebox{0.7}{ \begin{tabular}{lrrrrrr}
+				\hline
+				& Res.Df & RSS & Df & Sum of Sq & F & Pr($>$F) \\ 
+				\hline
+				1 & 34 & 505.47 &  &  &  &  \\ 
+				2 & 28 & 187.90 & 6 & 317.57 & 7.89 & 4.931e-05 \\ 
+				\hline
+		\end{tabular}}
+	\end{subtable} 
+\end{table} 
+
+
+
+We observe on the table of AIC that the model with multiples variables have small AIC that the simple linear model also in the table of ANOVA we have a very small p-value meaning that the model with more features is the best one to choose.\\
+\end{enumerate}		
+\textbf{Conclusion:} By conclusion, we can retain from the analysist of this dataset that the intelligence of a children reflect the intellligence of his mother. But all the other variables considered in this dataset play and important role in the determination of the intelligence level of a children\\\\
+
+
+
+\textbf{\textit{Exercice 2}}
+
+
+\begin{enumerate}
+\item	History and description of the data
+
+The Microarray Gene Expression dataset have be collected to identify the prostate cancer on patients. In our case, we have the data on 79 patients (observations) and 500 variables. The output of the dataset is Y $\in\{0,1\}$ meaning we are in the case of pattern recognition or classification learning. In the case of Y = 0, we have a patient who is negative to the cancer prostate an when Y=1, the patient is positive to the cancer prostate
+
+
+\item Plot of the distribution of the response
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=7cm,width=5cm]{5}
+	\caption{Distribution of the response variable}
+\end{figure}
+
+With the above barplot, we can see that among the 79 patients, 39 patients are not carriers of the disease while 40 of them carry.
+
+
+\item Comment on the shape and the dimensionnality
+
+Using the command `dim' on R, we see that the data have 500 variables(Columns) against 79 observations(rows). since $79\lll500$ we are in the case of ultra-hight dimensionsional system or overdetermined system. 
+
+
+\item Our comments is based on theobservation of 8 variables. For those variables, we have the box plot and plot below:
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[height=5cm,width=7cm]{8}
+		\caption{Boxplot}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[height=5cm,width=8cm]{9}
+		\caption{Scatter plot}
+	\end{subfigure}
+\end{figure}
+
+We can observe from the scatter plot above that many of those random  variables are highly correlated. In the case of these variable, we can see a negatif median.
+
+
+
+
+
+
+
+
+
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+\end{document}	
+
+
+
+
+ 

@@ -1,0 +1,558 @@
+---
+title: "Introduction to Nearest Neighbors Learning"
+author: "Fokoue Ernest"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+
+This segment of the course provides a step by step introduction to some of the  most
+foundational concepts of statistical machine learning, namely cross validation and the 
+related stochastic hold out for comparing different statistical learning machines. The 
+beautiful graphical tool known as Receiver Operating Characteristic Curve (ROC) is 
+introduced. All these concepts are introduced using k Nearest Neighbors Learning Machines.
+
+
+## Packages used in this segment
+
+```{R}
+  library(class)
+  library(MASS)
+  library(kernlab)
+  library(mlbench)
+  library(reshape2)
+  library(ROCR)
+  library(ggplot2)
+```
+
+## Dataset used in this segment
+
+The famous Pima Indian Diabetes dataset is well known benchmark data used by my
+Machine Learning researchers in the context of classification learning. The input
+space in this case is only 7-dimensional and the classification is binary, but the
+underlying classification turns out to be rather challenging
+
+```{R}
+  data(PimaIndiansDiabetes)        # load the data
+  xy <- PimaIndiansDiabetes        # Store data in xy frame
+  help(PimaIndiansDiabetes)        # learn stuff about this dataset
+```
+
+Let's have a look at the first six and the last six observations
+
+```{R}
+head(xy)
+tail(xy)
+```
+ 
+Let's also ascertain the types of the variables
+
+```{R}
+str(xy)
+```
+
+Now let's a table of the data top of the data
+```{R}
+library(xtable)
+xtable(head(xy))
+```
+
+Now, let's shape things nicely for heavy duty computations
+
+```{R}
+  n   <- nrow(xy)       # Sample size
+  p   <- ncol(xy) - 1   # Dimensionality of the input space
+  pos <- p+1            # Position of the response
+  x   <- xy[,-pos]      # Data matrix: n x p matrix
+  y   <- xy[, pos]      # Response vector
+  n; p
+```
+
+## Have a look at the data more closely through correlation
+
+```{R}
+library(corrplot)
+corrplot(cor(x))
+```
+
+## How about pairwise relationships
+```{R}
+plot(x, col=as.numeric(y)+2)
+```
+
+## How would each variable perform if left alone
+
+```{R}
+ par(mfrow=c(3,3))
+ for(j in 1:p)
+ {
+   boxplot(x[,j]~y, col=2:3, ylab=colnames(x)[j], xlab='diabetic')
+ }   
+```
+##  What do the variables look like?
+
+```{R}
+  boxplot(x)
+```
+## What is the distribution of the response?
+```{R}
+  barplot(prop.table(table(y)), col=2:3, xlab='diabetic')
+```
+
+## Split of the data into training set and test set
+
+```{R}
+# Split the data
+  
+  set.seed (19671210)   # Set seed for random number generation to be reproducible
+  
+  epsilon <- 1/3               # Proportion of observations in the test set
+  nte     <- round(n*epsilon)  # Number of observations in the test set
+  ntr     <- n - nte
+
+  id.tr   <- sample(sample(sample(n)))[1:ntr]   # For a sample of ntr indices from {1,2,..,n}
+  #id .tr <- sample(1:n, ntr, replace=F)        # Another way to draw from {1,2,..n}
+  id.te   <- setdiff(1:n, id.tr)
+  id.te
+  id.tr
+```
+  
+## Predictive performance of the 9-Nearest Neighbors Classifier
+
+As you know by now, nearest neighbors learning machines are so-called lazy learners since there is no estimation per se in the traditional sense of storing a model. Instead, all the nearest neighbors machine does is perform predictions. If $\mathcal{Y}$ represents our output space and $\mathcal{X}$ represent our input space, and $\mathcal{V}_k(x)$ represents the set of the $k$ nearest neighbors of $x \in \mathcal{X}$ in the provided
+dataset $\mathcal{D}_n$, then the predicted class $\widehat{f}_{\tt kNN}(x)$ of $x \in \mathcal{X}$ is given by
+$$
+\widehat{f}_{\tt kNN}(x) = \underset{c \in \mathcal{Y}}{{\tt argmax}}\Bigg\{\frac{1}{k}\sum_{i=1}^n{{\bf 1}(x_i \in \mathcal{V}_k(x)){\bf 1}(y_i=c)}\Bigg\}
+$$
+Below, we start by considering the 9 nearest neighbors binary classifier on the test set, and the  corresponding confusion matrix is generated
+
+```{R}
+  k        <- 9
+  y.te     <- y[id.te]                                 # True responses in test set
+  y.te.hat <- knn(x[id.tr,], x[id.te,], y[id.tr], k=k) # Predicted responses in test set
+  
+  conf.mat.te <- table(y.te, y.te.hat)
+  conf.mat.te
+```
+
+We now consider a different and very special nearest neighbors learning machines, namely
+the 1 nearest neighbor or simply nearest neighbor learning machine. This time we first
+consider only the training set, and generate the corresponding confusion matrix
+
+```{R}
+  k        <- 1
+  y.tr     <- y[id.tr]                                 # True responses in test set
+  y.tr.hat <- knn(x[id.tr,], x[id.tr,], y[id.tr], k=k) # Predicted responses in test set
+  
+  conf.mat.tr <- table(y.tr, y.tr.hat)
+  conf.mat.tr
+```
+
+We can see above something quite remarkable in the confusion matrix.
+
+## Exercise
+Explain why the off diagonal have the values observed
+Generate the 1NN test set confusion matrix
+
+Below we set alternative ways of generating the very same quantities encountered 
+earlier. This is provided here just for completeness and one can choose any of the
+ways to generate the predictive quantities of interest
+
+```{R}
+# Indicator of error in test
+  
+  ind.err.te <- ifelse(y.te!=y.te.hat,1,0)      # Random variable tracking error. Indicator
+  ind.err.te
+  
+# Identification of misclassified cases
+  
+  id.err     <- which(y.te!=y.te.hat)           # Which obs are misclassified  
+  id.err
+  
+# Confusion matrix
+  
+  conf.mat.te <- table(y.te, y.te.hat)   
+  conf.mat.te
+  
+# Percentage of correctly classified (accurary)
+  
+  pcc.te <- sum(diag(conf.mat.te))/nte
+  # pcc.te <- 1-mean(ind.err.te)        # Another way from ind.err.te
+  # pcc.te <- 1-length(id.err.te)/nte   # Yet another way fr
+  pcc.te
+  
+# Test Error
+  
+  err.te <- 1-pcc.te                    # Complement of accurary
+  err.te
+```
+
+$$
+\widehat{R}^{(tr)}(\widehat{f})= \frac{1}{|\mathcal{D}_n^{(tr)}|}\sum_{i=1}^n{{\bf 1}(z_i \in \mathcal{D}_n^{(tr)}){\tt loss}(y_i, \widehat{f}(x_i))}
+$$
+The corresponding test error is
+$$
+\widehat{R}^{(te)}(\widehat{f})= \frac{1}{|\mathcal{D}_n^{(te)}|}\sum_{i=1}^n{{\bf 1}(z_i \in \mathcal{D}_n^{(te)}){\tt loss}(y_i, \widehat{f}(x_i))}
+$$
+Where we also crucially have
+$$
+\mathcal{D}_n^{(tr)} \cup \mathcal{D}_n^{(te)} = \mathcal{D}_n
+$$
+So that
+$$
+|\mathcal{D}_n^{(tr)}| + |\mathcal{D}_n^{(te)}| = |\mathcal{D}_n| = n.
+$$
+
+The loss function used in the above errors is simply the famous zero-one loss, namely
+$$
+ {\tt loss}(y, f(x)) = {\tt zeroone}(y, f(x)) = {\bf 1}(y\neq f(x))=
+\left\{
+\begin{array}{ll}
+1 & \text{if}\,\, y \neq f(x) \\
+0 & \text{if}\,\, y = f(x)
+\end{array}\right.
+$$
+
+## Receiver Operating Characteristics (ROC) Curves
+
+We now turn to the creation of the very appealing graphic summary known
+as the ROC curve. This is arguably one of the best tools in binary
+classification as it allows the straightforward and very intuitive graphical
+way of assessing the predictive performance of a binary classifier. The ROC curve is built
+from two main ingredients, namely the True Positive Rate (TPR) and the False Positive Rate (FPR). For a given estimated learning machine $\widehat{f}$, we have
+
+$$
+{\tt TPR}(\widehat{f}) = \Pr(\widehat{f}(X)= +1 | Y = +1) = \frac{\Pr(\widehat{f}(X)=+1 \, \text{and} \, Y = +1) }{\Pr(Y = + 1)}
+$$
+and
+
+$$
+{\tt FPR}(\widehat{f}) = \Pr(\widehat{f}(X)= +1 | Y = -1) = \frac{\Pr(\widehat{f}(X)=+1 \, \text{and} \, Y = -1) }{\Pr(Y = - 1)}
+$$
+IN practice we neither have ${\tt FPR}(\widehat{f})$ nor ${\tt TPR}(\widehat{f})$, but instead their estimator $\widehat{{\tt FPR}(\widehat{f})}$ and $\widehat{{\tt TPR}(\widehat{f})}$ respectively.
+
+```{R}
+#
+#  ROC Curve: Plotting one single ROC Curve
+#
+  library(ROCR)
+  
+  y.roc <- ifelse(y=='pos',1,0)
+  
+  kNN.mod <- class::knn(x[id.tr,], x[id.tr,], y.roc[id.tr], k=3, prob=TRUE)
+  prob    <- attr(kNN.mod, 'prob')
+  prob    <- 2*ifelse(kNN.mod == "0", 1-prob, prob) - 1
+  
+  pred.knn <- prediction(prob, y.roc[id.tr])
+  perf.knn <- performance(pred.knn, measure='tpr', x.measure='fpr')
+  
+  plot(perf.knn, col=2, lwd= 2, lty=2, main=paste('ROC curve for kNN with k=3'))
+  abline(a=0,b=1)
+  y.roc
+```
+We see above that the area under the curve (AUC) for the 3NN classifier on the test
+set is not very satisfying. The task of classifying diabetes appears difficult
+
+We now consider the creation of the ROC curves of our binary classifiers, but this time
+based on the training set
+
+```{R}
+#
+# Comparative ROC Curves on the training set
+# 
+  library(ROCR)
+  
+  y.roc <- ifelse(y=='pos',1,0)
+  
+  kNN.mod <- class::knn(x[id.tr,], x[id.tr,], y.roc[id.tr], k=1, prob=TRUE)
+  prob    <- attr(kNN.mod, 'prob')
+  prob    <- 2*ifelse(kNN.mod == "0", 1-prob, prob) - 1
+  
+  pred.1NN <- prediction(prob, y.roc[id.tr])
+  perf.1NN <- performance(pred.1NN, measure='tpr', x.measure='fpr')
+  
+  kNN.mod <- class::knn(x[id.tr,], x[id.tr,], y.roc[id.tr], k=13, prob=TRUE)
+  prob    <- attr(kNN.mod, 'prob')
+  prob    <- 2*ifelse(kNN.mod == "0", 1-prob, prob) - 1
+  
+  pred.13NN <- prediction(prob, y.roc[id.tr])
+  perf.13NN <- performance(pred.13NN, measure='tpr', x.measure='fpr')
+  
+  kNN.mod <- class::knn(x[id.tr,], x[id.tr,], y.roc[id.tr], k=28, prob=TRUE)
+  prob    <- attr(kNN.mod, 'prob')
+  prob    <- 2*ifelse(kNN.mod == "0", 1-prob, prob) - 1
+  
+  pred.28NN <- prediction(prob, y.roc[id.tr])
+  perf.28NN <- performance(pred.28NN, measure='tpr', x.measure='fpr')
+  
+  plot(perf.1NN, col=2, lwd= 2, lty=2, main=paste('Comparative ROC curves in Training'))
+  plot(perf.13NN, col=3, lwd= 2, lty=3, add=TRUE)
+  plot(perf.28NN, col=4, lwd= 2, lty=4, add=TRUE)
+  abline(a=0,b=1)
+  legend('bottomright', inset=0.05, c('1NN','13NN', '28NN'),  col=2:4, lty=2:4)
+```
+
+The comparatibve ROC curves based on the training set appear to declare the famous 1NN classifier the winner. However, this result is not valid, but the predictive comparisons are only truly meaningful if they are based on the test set.
+
+```{R}
+#
+# Comparative ROC Curves on the test set
+# 
+  library(ROCR)
+  
+  y.roc <- ifelse(y=='pos',1,0)
+  
+  kNN.mod <- class::knn(x[id.tr,], x[id.te,], y.roc[id.tr], k=1, prob=TRUE)
+  prob    <- attr(kNN.mod, 'prob')
+  prob    <- 2*ifelse(kNN.mod == "0", 1-prob, prob) - 1
+  
+  pred.1NN <- prediction(prob, y.roc[id.te])
+  perf.1NN <- performance(pred.1NN, measure='tpr', x.measure='fpr')
+  
+  kNN.mod <- class::knn(x[id.tr,], x[id.te,], y.roc[id.tr], k=6, prob=TRUE)
+  prob    <- attr(kNN.mod, 'prob')
+  prob    <- 2*ifelse(kNN.mod == "0", 1-prob, prob) - 1
+  
+  pred.6NN <- prediction(prob, y.roc[id.te])
+  perf.6NN <- performance(pred.6NN, measure='tpr', x.measure='fpr')
+  
+  kNN.mod <- class::knn(x[id.tr,], x[id.te,], y.roc[id.tr], k=13, prob=TRUE)
+  prob    <- attr(kNN.mod, 'prob')
+  prob    <- 2*ifelse(kNN.mod == "0", 1-prob, prob) - 1
+  
+  pred.13NN <- prediction(prob, y.roc[id.te])
+  perf.13NN <- performance(pred.13NN, measure='tpr', x.measure='fpr')
+  
+  kNN.mod <- class::knn(x[id.tr,], x[id.te,], y.roc[id.tr], k=28, prob=TRUE)
+  prob    <- attr(kNN.mod, 'prob')
+  prob    <- 2*ifelse(kNN.mod == "0", 1-prob, prob) - 1
+  
+  pred.28NN <- prediction(prob, y.roc[id.te])
+  perf.28NN <- performance(pred.28NN, measure='tpr', x.measure='fpr')
+  
+  plot(perf.1NN, col=2, lwd= 2, lty=2, main=paste('Comparison of Predictive ROC curves'))
+  plot(perf.6NN, col=3, lwd= 2, lty=3, add=TRUE)
+  plot(perf.13NN, col=4, lwd= 2, lty=4, add=TRUE)
+  plot(perf.28NN, col=5, lwd= 2, lty=5, add=TRUE)
+  abline(a=0,b=1)
+  legend('bottomright', inset=0.05, c('1NN','6NN','13NN', '28NN'),  col=2:5, lty=2:5)
+```
+
+We see now from the above comparative ROC curves, that 1NN is no longer the winner. It's apparent superior performance on the training set was most likely due to overfitting. This is an important lesson to learn, namely that one must base predictive comparisons on generalization which is mimic by the test set
+
+## Cross Validation for Selection Models within a Function Space
+
+Within the implicit function space from which each of the k Nearest Neighbors machines
+are chosen, it is of great interest to find a strategy or a least a criterion for choosing
+a member of the space, in this case the size of the neighborhood $k$. 
+It turns out that cross validation does allow us to determine the neighborhood size $k$.       
+
+$$
+{\tt CV}(\widehat{f}) = \frac{1}{V}\sum_{v=1}^{V}{\widehat{e}_v(\widehat{f})}
+$$
+where the $v^{th}$ cross validated error $\widehat{e}_v(\widehat{f})$, is the error made by $\widehat{f}$ on the $v^{th}$ chunk of the $\mathcal{D}_n$, with that left out chunk not having been used in the training of $\widehat{f}$, ie
+$$
+\widehat{e}_v(\widehat{f}) = \frac{1}{|\mathcal{D}_n^{(v)}|}\sum_{i=1}^n{\mathbf{1}(z_i \in \mathcal{D}_n^{(v)}){\tt loss}(y_i,\widehat{f}^{(-v)}(x_i))}
+$$
+where $z_i=(x_i, y_i)$ and $\widehat{f}^{(-v)}(\cdot)$ is estimator $\widehat{f}$ obtained on data without the $v^{th}$ chunk $\mathcal{D}_n^{(v)}$. 
+
+```{R}
+  xtr <- x #x[id.tr,]          # Using the only the training for validation 
+  ytr <- y #y[id.tr]           # We could use the entire sample but that's greedy
+  
+  vK <- seq(1, 25, by=1)    # Grid of values of k 
+  nK <- length(vK)          # Number of values of k considered
+  cv.error <-numeric(nK)    # Vector of cross validation errors for each k
+  nc <- nrow(xtr)           # Number of observations used for cross validation 
+  c   <- 10                 # Number of folds. We are doing c-fold cross validation
+  
+  S   <- sample(sample(nc)) # We randomly shuffle the data before starting CV
+  m   <- ceiling(nc/c)      # Maximum Number of observations in each fold
+  
+  held.out.set <- matrix(0, nrow=c, ncol=m) # Table used to track the evolution
+  
+  for(ic in 1:(c-1))
+  {
+    held.out.set[ic,] <- S[((ic-1)*m + 1):(ic*m)]
+  }
+  held.out.set[c, 1:(nc-(c-1)*m)] <- S[((c-1)*m + 1):nc]  # Handling last chunk just in case n!=mc
+
+#  
+# Running the cross validation itself
+#  
+  for(j in 1:nK)
+  { 
+    for(i in 1:c)
+    {   
+      out <-  held.out.set[i,] 
+      yhatc<- knn(xtr[-out,], xtr[out,],ytr[-out],  k=vK[j])
+      cv.error[j]<-cv.error[j] + (length(out)-sum(diag(table(ytr[out],yhatc))))/length(out)
+    }
+    cv.error[j]<-cv.error[j]/c
+  }
+
+#  
+# Plot the cross validation curve
+#  
+  plot(vK, cv.error, xlab='k', ylab=expression(CV[Error](k)), 
+      main='Choice of k in k Nearest Neighbor by m-fold Cross Validation') 
+  lines(vK, cv.error, type='c') 
+```
+
+For a nicer looking plot, we resort to the famous ggplot
+
+```{R}
+#
+#  Nicer plot with ggplot2
+#
+  
+  cv <- data.frame(vK, cv.error)
+  colnames(cv) <- c('k','error')
+  
+  ggplot(cv, aes(k,error))+geom_point()+geom_line()+
+    labs(x='k=size of neighborhood', y=expression(CV[Error](k)))
+```
+
+
+## Predictive performance using stochastic hold out
+
+Once members of various function spaces are chosen using perhaps cross validation as 
+above, it becomes interesting to compare several methods via many copies of their
+test errors generated randomly via stochastic hold out. We first do it for a single
+learning machine and then we move on to several different learning machines
+
+```{R}
+# 
+# Extract the optimal k yielded by cross validation 
+#  
+  k.opt.cv <- max(which(cv.error==min(cv.error)))
+ 
+##############################################################
+# Using the optimally tuned k let's estimate the test error  #
+##############################################################
+  
+  set.seed (19671210)          # Set seed for random number generation to be reproducible
+  
+  epsilon <- 1/3               # Proportion of observations in the test set
+  nte     <- round(n*epsilon)  # Number of observations in the test set
+  ntr     <- n - nte
+  
+  #k.opt.cv <- 28
+  
+  R <- 100   # Number of replications
+  test.err <- numeric(R)
+  
+  for(r in 1:R)
+  {
+    # Split the data
+    
+    id.tr   <- sample(sample(sample(n)))[1:ntr]                   # For a sample of ntr indices from {1,2,..,n}
+    id.te   <- setdiff(1:n, id.tr)
+  
+    y.te         <- y[id.te]                                        # True responses in test set
+    y.te.hat     <- knn(x[id.tr,], x[id.te,], y[id.tr], k=k.opt.cv) # Predicted responses in test set
+    ind.err.te   <- ifelse(y.te!=y.te.hat,1,0)                      # Random variable tracking error. Indicator
+    test.err[r]  <- mean(ind.err.te)
+  }  
+  
+  test <- data.frame(test.err)
+  colnames(test) <- c('error')
+  
+  ggplot(test, aes(x='', y=error))+geom_boxplot()+
+  labs(x='Method', y=expression(hat(R)[te](kNN)))
+  
+  ##############################################################
+  #  Predictively compare different kNN  learning machines     #
+  ##############################################################
+```
+
+We now consider the actually comparison of various different learning machines in terms
+of their predictive performances obtained via stochastic hold out. In this case, we are
+comparing different members of the nearest neighbors paradigm, but in reality, we can
+and will consider learning machines originating from drastically different paradigms
+
+```{R}
+  set.seed (19671210)          # Set seed for random number generation to be reproducible
+  
+  epsilon <- 1/3               # Proportion of observations in the test set
+  nte     <- round(n*epsilon)  # Number of observations in the test set
+  ntr     <- n - nte
+  
+  R <- 100   # Number of replications
+  test.err <- matrix(0, nrow=R, ncol=5)
+  
+  for(r in 1:R)
+  {
+    # Split the data
+    
+    id.tr   <- sample(sample(sample(n)))[1:ntr]                   # For a sample of ntr indices from {1,2,..,n}
+    id.te   <- setdiff(1:n, id.tr)
+    
+    y.te         <- y[id.te]                                        # True responses in test set
+    
+    # First machine: 1NN
+    
+    y.te.hat     <- knn(x[id.tr,], x[id.te,], y[id.tr], k=1)        # Predicted responses in test set
+    ind.err.te   <- ifelse(y.te!=y.te.hat,1,0)                      # Random variable tracking error. Indicator
+    test.err[r,1]  <- mean(ind.err.te)
+    
+    # Second machine: Our optimal NN found earlier with k=k.opt.cv
+    y.te.hat     <- knn(x[id.tr,], x[id.te,], y[id.tr], k=k.opt.cv) # Predicted responses in test set
+    ind.err.te   <- ifelse(y.te!=y.te.hat,1,0)                      # Random variable tracking error. Indicator
+    test.err[r,2]  <- mean(ind.err.te)
+    
+    # Third machine: k=round(sqrt(n))
+    y.te.hat     <- knn(x[id.tr,], x[id.te,], y[id.tr], k=round(sqrt(ntr)))       # Predicted responses in test set
+    ind.err.te   <- ifelse(y.te!=y.te.hat,1,0)                      # Random variable tracking error. Indicator
+    test.err[r,3]  <- mean(ind.err.te)
+    
+    
+  # Fourth machine: k=round(log(n))
+    y.te.hat     <- knn(x[id.tr,], x[id.te,], y[id.tr], k=round(log(ntr)))       # Predicted responses in test set
+    ind.err.te   <- ifelse(y.te!=y.te.hat,1,0)                      # Random variable tracking error. Indicator
+    test.err[r,4]  <- mean(ind.err.te)
+    
+      
+  # Fourth machine: k=log(n)
+    y.te.hat     <- knn(x[id.tr,], x[id.te,], y[id.tr], k=round(ntr/2))       # Predicted responses in test set
+    ind.err.te   <- ifelse(y.te!=y.te.hat,1,0)                      # Random variable tracking error. Indicator
+    test.err[r,5]  <- mean(ind.err.te)
+  }  
+  
+  test <- data.frame(test.err)
+  Method<-c('1NN', 'optk.NN', 'sqrtn.NN', 'logn.NN', 'nNN')
+  colnames(test) <- Method
+  boxplot(test)
+```  
+
+Once again, we also produce a nicer looking version of the same plot using the
+famous ggplot
+
+```{R}
+  require(reshape2)
+  ggplot(data = melt(test), aes(x=variable, y=value)) + geom_boxplot(aes(fill=variable))+
+    labs(x='Learning Machine', y=expression(hat(R)[te](kNN)))+
+    theme(legend.position="none") 
+```
+
+## Analysis of Variance 
+
+From a purely statistical perspective, it often becomes important to perform  the
+inferential method of analysis of variance to more rigorously and more formally
+compare the learning machines under consideration
+
+```{R}
+#  
+# Is the difference between the methods significant
+#  
+  aov.method <- aov(value~variable, data=melt(test))
+  anova(aov.method)
+  #summary(aov.method)
+  
+  TukeyHSD(aov.method, ordered = TRUE)
+  plot(TukeyHSD(aov.method))
+```
+The comparison in this case is trivial.

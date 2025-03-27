@@ -1,0 +1,300 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Template for AIMS Rwanda Assignments         %%%              %%%
+%%% Author:   AIMS Rwanda tutors                             %%%   ###        %%%
+%%% Email: tutors2017-18@aims.ac.rw                               %%%   ###        %%%
+%%% Copyright: This template was designed to be used for    %%% #######      %%%
+%%% the assignments at AIMS Rwanda during the academic year %%%   ###        %%%
+%%% 2017-2018.                                              %%%   #########  %%%
+%%% You are free to alter any part of this document for     %%%   ###   ###  %%%
+%%% yourself and for distribution.                          %%%   ###   ###  %%%
+%%%                                                         %%%              %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%% Ensure that you do not write the questions before each of the solutions because it is not necessary. %%%%%% 
+
+\documentclass[11pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% packages %%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[all]{xy}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{psfrag}
+
+%%%%%%%%%%%%%%%%%%%%% students data %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\student}{Louis Mozart Kamdem}
+\newcommand{\course}{LaTex}
+\newcommand{\assignment}{1}
+
+%%%%%%%%%%%%%%%%%%% using theorem style %%%%%%%%%%%%%%%%%%%%
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{quest}{Question}[section]
+
+%%%%%%%%%%%%%%  Shortcut for usual set of numbers  %%%%%%%%%%%
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%% title page %%%%%%%%%%%%%%%%%%%%%%%%%%
+	\thispagestyle{empty}
+	\begin{center}
+		\textbf{AFRICAN INSTITUTE FOR MATHEMATICAL SCIENCES \\[0.5cm]
+			(AIMS RWANDA, KIGALI)}
+		\vspace{1.0cm}
+	\end{center}
+	
+	%%%%%%%%%%%%%%%%%%%%% assignment information %%%%%%%%%%%%%%%%
+	\noindent
+	\rule{17cm}{0.2cm}\\[0.3cm]
+	Name:\student \hfill Assignment Number: \assignment\\[0.1cm]
+	Course:\course \hfill Date: \today\\
+	\rule{17cm}{0.05cm}
+	\vspace{1.0cm} 
+ 
+ 
+ 
+ 
+\section{Introduction}
+% latex table generated in R 4.1.2 by xtable 1.8-4 package
+% Sat Dec  4 10:49:54 2021
+\begin{table}[ht]
+	\caption{Summary of the data}
+	\centering
+	\scalebox{0.7}{%
+		\begin{tabular}{rlllllll}
+			\hline
+			&    User\_ID &    Gender & City\_Category & Stay\_In\_Current\_City\_Years & Marital\_Status &    Age\_num &    Purchase \\ 
+			\hline
+			X & Min.   :1000001   & Length:159000      & Length:159000      & Min.   :0.000   & Min.   :0.000   & Min.   :10.00   & Min.   :   12   \\ 
+			X.1 & 1st Qu.:1001523   & Class :character   & Class :character   & 1st Qu.:1.000   & 1st Qu.:0.000   & 1st Qu.:27.00   & 1st Qu.: 5828   \\ 
+			X.2 & Median :1003084   & Mode  :character   & Mode  :character   & Median :2.000   & Median :0.000   & Median :33.00   & Median : 8044   \\ 
+			X.3 & Mean   :1003033   &  &  & Mean   :1.856   & Mean   :0.411   & Mean   :34.81   & Mean   : 9270   \\ 
+			X.4 & 3rd Qu.:1004482   &  &  & 3rd Qu.:3.000   & 3rd Qu.:1.000   & 3rd Qu.:42.00   & 3rd Qu.:12059   \\ 
+			X.5 & Max.   :1006040   &  &  & Max.   :4.000   & Max.   :1.000   & Max.   :75.00   & Max.   :23961   \\ 
+			\hline
+	\end{tabular}}
+
+\end{table}
+
+The data submitted to our study contains 7 variables which are $User_{-}id$, $Gender$, $City_{-}category$,
+\\ $Stay_{-}in_{-}current_{-}city_{-}Years$, 
+$Maried_{-}statues$, $age_{-}num$, $ Purchase $.
+
+Among these variables, we have two categorical variables which are Gender and City category  describe respectively the gender and the city category of the company's customers. The other five variables are numerical variables described as follows:
+
+\begin{itemize}
+	\item[-] $User_{-}id$ which provides information on the client's identification number.
+	\item[-] $Stay_{-}in_{-}current_{-}city_{-}Years$ 
+	which provides information on the number of years the client has been in the current city
+	\item[-] $Maried_{-}statues$ which indicates whether a client is married or not
+	
+	\item[-] $Age_{-}num$ which gives the approximate age of the client
+	
+	\item[-] $ Purchase $ gives the customer's purchase price
+\end{itemize}
+In this assignment we will study the purchasing behavior of the customers of this company
+	
+\section{descriptive analysis of the variables}	
+\begin{figure}[h!]
+	\centering
+	\scalebox{0.5}{
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{report1}
+		
+		\label{fig:trapez1}
+	\end{subfigure}
+	~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+	%(or a blank line to force the subfigure onto a new line)
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{report2}
+		 
+		\label{fig:trapez2}
+	\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+	\includegraphics[width=\textwidth]{report4}
+	\caption{city of clients}
+	 \label{fig:trapez2}
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+	\includegraphics[width=\textwidth]{report5}
+	 \caption{gender of clients}
+	\label{fig:trapez2}
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+	\includegraphics[width=\textwidth]{report6}
+	\caption{marital status of clients}
+	\label{fig:trapez2}
+\end{subfigure}
+}
+
+	\caption{Visualition of some variables}\label{fig:trapez}
+\end{figure}
+
+
+%\newpage
+From the two last plot below, we see that most of the clients of the compagny are men and most of the client are single.
+Most of the client of the compagny come from the city B.
+
+From the first table (summary of the data), we can see that the mean of age of the clients was around 35 years old. 
+
+The histogram of purchase show the best sale of the company who was around 24000 and the also the worst sale of the company who is around 12
+
+The box plot provide the information that although most of the client coming from the city B, the best clients of the company ie clients who pay the best are from city C 
+
+
+
+ 
+\newpage
+\section{Build of a Linear Model}
+% latex table generated in R 4.1.2 by xtable 1.8-4 package
+% Sat Dec  4 14:04:13 2021
+
+\begin{table}[ht]
+	\caption{Correlation table between numerical variable}
+	\centering
+	\scalebox{0.9}{%
+		\begin{tabular}{rrrrrr}
+			\hline
+			& User\_ID & Stay\_In\_Current\_City\_Years & Marital\_Status & Age\_num & Purchase \\ 
+			\hline
+			User\_ID & 1.00 & -0.03 & 0.02 & 0.04 & 0.01 \\ 
+			Stay\_In\_Current\_City\_Years & -0.03 & 1.00 & -0.01 & -0.01 & 0.00 \\ 
+			Marital\_Status & 0.02 & -0.01 & 1.00 & 0.30 & 0.00 \\ 
+			Age\_num & 0.04 & -0.01 & 0.30 & 1.00 & 0.02 \\ 
+			Purchase & 0.01 & 0.00 & 0.00 & 0.02 & 1.00 \\ 
+			\hline
+	\end{tabular}}
+	
+\end{table}
+	
+\begin{enumerate}
+	 
+\item[a)] Fit the model by estimating the intercept, the slope, and the underlying
+uncertainties.
+
+
+The table 2 above show the correlation between all the variable and from this table, we see the linear relation between the purchase amount and the age is equal to $0.02$ mean that there is not a good correlation betweeen the purchase amount and the age of clients are not good correlated but amount all the variables, it is the highest correlation we have.
+
+The table below give the summary of the linear model between the purchase amount and the age of the clients.
+
+% latex table generated in R 4.1.2 by xtable 1.8-4 package
+% Sat Dec  4 13:34:57 2021
+\begin{table}[h!]
+	\caption{summary of the model}
+	\centering
+	\begin{tabular}{rrrrr}
+		\hline
+		& Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+		\hline
+		(Intercept) & 9037.9363 & 39.3693 & 229.57 & 0.0000 \\ 
+		Age\_num & 6.6806 & 1.0716 & 6.23 & 0.0000 \\ 
+		\hline
+	\end{tabular}
+
+\end{table}	
+
+We can see that the intercept of the linear model is estimated as 9037.9363 with an error of around 39.36 and the estimation of the slope is 6.6806 with an error of around 1.0716.
+
+
+
+\item[b)] Interpretation of the model.
+
+
+For the two estimations (slope and intercept), the p-value is  very close from 0 this mean that those parameters are useful to express the Purchase amount in function of the age of client. 
+
+Another way is, since the estimated slope is positive, we deduce that the amount of purchase and the age of client are positively correlated
+
+\item[c)] Usefulness of the model
+
+The built model is useful in term that we can have and approximation of the purchase amount for a given age of a client. 
+
+
+\item[d)] Limitation of the model
+
+Since the correlation between the age of a client and the purchase amount is not good, this model will not truly provide 
+the right information about the Purchase behavior. 
+ 
+\item[e)] Two ways to improve the model:
+
+instead of this model, we can make another model more complex by adding one another parameter who is the Gender of each client. Let make a summary of the new model:
+
+% latex table generated in R 4.1.2 by xtable 1.8-4 package
+% Sat Dec  4 20:17:38 2021
+\begin{table}[ht]
+	\caption{More complex model}
+	\centering
+	\begin{tabular}{rrrrr}
+		\hline
+		& Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+		\hline
+		(Intercept) & 8509.1036 & 44.9693 & 189.22 & 0.0000 \\ 
+		data\$GenderM & 705.0462 & 29.1474 & 24.19 & 0.0000 \\ 
+		data\$Age\_num & 6.6341 & 1.0696 & 6.20 & 0.0000 \\ 
+		\hline
+	\end{tabular}
+\end{table}
+The new model being built, we can make a few comparaison with the first model using the function ANOVA. this yield:
+
+% latex table generated in R 4.1.2 by xtable 1.8-4 package
+% Sat Dec  4 20:25:38 2021
+
+\begin{table}[ht]
+	\caption{Comparaison of the two model}
+	\centering
+	\begin{tabular}{lrrrrrr}
+		\hline
+		& Res.Df & RSS & Df & Sum of Sq & F & Pr($>$F) \\ 
+		\hline
+		1 & 158998 & 4002488156301.84 &  &  &  &  \\ 
+		2 & 158997 & 4001520005780.22 & 1 & 968150521.62 & 38.47 & 0.0000 \\ 
+		\hline
+	\end{tabular}
+\end{table}
+Since the P-value in the table of comparison is very close to zero, the new model is better than the first one.
+
+Another way to improve the model is to add polynomial terms to model the nonlinear relationship between the independent variable and the target variable.
+\end{enumerate}
+\section{investigate the association between the purchases amount and gender we can change the the type of data in the variable Gender}
+Since the variable Gender is a categorical variable, a linear correlation between Gender and Purchase amount will be not good but we can build a linear model between those two variables to see at least if there are  positively correlated.
+
+% latex table generated in R 4.1.2 by xtable 1.8-4 package
+% Sat Dec  4 21:36:24 2021
+\begin{table}[ht]
+	\caption{relation between purchase and Gender}
+	\centering
+	\begin{tabular}{rrrrr}
+		\hline 
+		& Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+		\hline
+		(Intercept) & 8739.7637 & 25.2851 & 345.65 & 0.0000 \\ 
+		data\$GenderM & 705.3713 & 29.1508 & 24.20 & 0.0000 \\ 
+		\hline
+	\end{tabular}
+\end{table}
+ 
+ We can see on the table above that the slope of the model positive which mean that the gender and the amount purchase are positively correlated.
+	
+\end{document}
