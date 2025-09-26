@@ -11,7 +11,7 @@ from pathlib import Path
 # 1. In the accompanying assignment Python file, students are supposed to fill in the required code
 # in all places where it says "YOUR CODE HERE"
 # 2. To find points for that particular line, please refer to the
-# corresponding line here, where it has comment POINTS at the end of the line
+# corresponding line here, where it has a comment POINTS at the end of the line
 
 def get_date_range_by_chunking(large_csv):
     """
@@ -38,7 +38,7 @@ def get_date_range_by_chunking(large_csv):
     dates = []      # POINTS: 1
     with pd.read_csv(large_csv, chunksize=chunksize) as reader: # POINTS: 1
         for chunk in reader:
-            # convert the string to Python datetime object
+            # convert the string to a Python datetime object
             # add a new column to hold this datetime object
             time_col = 'activ_time' # POINTS: 1
             chunk[time_col] = chunk[str_time_col].apply(lambda x: pd.to_datetime(x[:9]))
@@ -50,7 +50,7 @@ def get_date_range_by_chunking(large_csv):
             dates.append(bottom_date)   # POINTS: 1
 
 
-    # Find the earliest and last date by sorting the dates list
+    # Find the earliest and last date by sorting the date list
     sorted_dates = sorted(dates, reverse=False)     # POINTS: 1
     first = sorted_dates[0] # POINTS: 2
     last = sorted_dates[-1] # POINTS: 2
