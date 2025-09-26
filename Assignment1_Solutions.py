@@ -8,10 +8,10 @@ from pathlib import Path
 # ================================
 # MARKING SCHEME NOTES
 # ===============================
-# 1. In the accompanying assignment Python file, students are supposed to fill in required code
+# 1. In the accompanying assignment Python file, students are supposed to fill in the required code
 # in all places where it says "YOUR CODE HERE"
-# 2. In order to find points for that particular line, please refer to the
-# corresponding line here where it has comment POINTS at the end of the line
+# 2. To find points for that particular line, please refer to the
+# corresponding line here, where it has comment POINTS at the end of the line
 
 def get_date_range_by_chunking(large_csv):
     """
